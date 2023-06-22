@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Run browser
+chromium-browser \
+    --window-size=1920x1080 \
+    --disable-restore-session-state \
+    --ignore-certificate-errors \
+    --user-data-dir=/tmp/chromium-data \
+    --disable-web-security \
+    --disable-site-isolation-trials \
+    --autoplay-policy=no-user-gesture-required \
+    --no-sandbox \
+    --kiosk \
+    --app="$URL" &
+
+# Run stream
+ffmpeg \
+    -f pulse -i default \
+    -f x11grab -draw_mouse 0 -framerate 60 -video_size 1920x1080 -i :1+0,0 \
+    -c:v libx264 -preset ultrafast -tune zerolatency -threads 4 \
+    -pix_fmt yuv420p -vb 6000k -r 60 \
+    -c:a aac -b:a 128k -ar 44100 \
+    -f flv "$STREAM_URL" &
+
+# Waiting for one of the processes to terminate 
+wait -n
