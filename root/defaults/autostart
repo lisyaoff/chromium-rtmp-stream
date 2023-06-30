@@ -18,7 +18,7 @@ ffmpeg \
     -f pulse -i default \
     -f x11grab -draw_mouse 0 -framerate 30 -video_size 1920x1080 $FFMPEG_VIDEO_ARGS -i :1+0,0 \
     -c:v libx264 -preset ultrafast -tune fastdecode -threads 4 \
-    -pix_fmt yuv420p -vb 32000k -r 30 \
+    -pix_fmt yuv420p -vb 6000k -r 30 \
     -c:a aac -b:a 128k -ar 44100 \
     -f flv "$STREAM_URL" &
 
