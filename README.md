@@ -18,7 +18,7 @@ services:
     shm_size: '1gb'
     network_mode: 'host'
     security_opt:
-      - seccomp: unconfined
+      - seccomp:unconfined
     environment:
       - URL=https://example.com/
       - STREAM_URL=rtmp://live.twitch.tv/app/TWITCH_STREAM_KEY
